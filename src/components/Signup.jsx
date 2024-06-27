@@ -1,4 +1,3 @@
-// frontend/src/components/Signup.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -23,14 +22,17 @@ const Signup = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input name="username" placeholder="Username" value={form.username} onChange={handleChange} />
-      <input name="email" placeholder="Email" value={form.email} onChange={handleChange} />
-      <input name="phone" placeholder="Phone" value={form.phone} onChange={handleChange} />
-      <input name="age" placeholder="Age" value={form.age} onChange={handleChange} />
-      <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} />
-      <button type="submit">Signup</button>
-    </form>
+    <div className="signup-container">
+      <form className="signup-form" onSubmit={handleSubmit}>
+        <h2>Signup</h2>
+        <input name="username" placeholder="Username" value={form.username} onChange={handleChange} />
+        <input name="email" placeholder="Email" value={form.email} onChange={handleChange} />
+        <input name="phone" placeholder="Phone" value={form.phone} onChange={handleChange} />
+        <input name="age" placeholder="Age" value={form.age} onChange={handleChange} />
+        <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} />
+        <button type="submit">Signup</button>
+      </form>
+    </div>
   );
 };
 

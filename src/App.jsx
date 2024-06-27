@@ -1,4 +1,3 @@
-// frontend/src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import HomePage from './components/Homepage';
@@ -6,7 +5,6 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import EmployeeList from './components/EmployeeList';
 import EditEmployee from './components/EditEmployee';
-import './App.css';
 
 const App = () => {
   return (

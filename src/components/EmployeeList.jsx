@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+
+
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
 
@@ -26,17 +28,33 @@ const EmployeeList = () => {
   };
 
   return (
-    <div>
+    <div className="employee-list-container">
       <h1>Employee List</h1>
-      <ul>
-        {employees.map(employee => (
-          <li key={employee.id}>
-            {employee.username} - {employee.email} - {employee.phone} - {employee.age}
-            <Link to={`/edit-employee/${employee.id}`}>Edit</Link>
-            <button onClick={() => handleDelete(employee.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <table className="employee-table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Age</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {employees.map(employee => (
+            <tr key={employee.id}>
+              <td>{employee.username}</td>
+              <td>{employee.email}</td>
+              <td>{employee.phone}</td>
+              <td>{employee.age}</td>
+              <td>
+                <Link to={`/edit-employee/${employee.id}`} className="edit-button">Edit</Link>
+                <button onClick={() => handleDelete(employee.id)} className="delete-button">Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
