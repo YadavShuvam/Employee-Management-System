@@ -22,26 +22,35 @@ const __dirname = dirname(__filename);
 const dbPath = resolve(__dirname, 'database.sqlite');
 const db = new sqlite3.Database(dbPath);
 
-// Create employees table if not exists
+// Create users table if not exists
 db.serialize(() => {
+  db.run(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT,
+      email TEXT,
+      password TEXT
+    )
+  `);
+
+  // Create employees table if not exists
   db.run(`
     CREATE TABLE IF NOT EXISTS employees (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT,
       email TEXT,
       phone TEXT,
-      age INTEGER,
-      password TEXT
+      age INTEGER
     )
   `);
 });
 
 // Signup endpoint
 app.post('/signup', (req, res) => {
-  const { username, email, phone, age, password } = req.body;
+  const { username, email, password } = req.body;
   db.run(
-    `INSERT INTO employees (username, email, phone, age, password) VALUES (?, ?, ?, ?, ?)`,
-    [username, email, phone, age, password],
+    `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`,
+    [username, email, password],
     function (err) {
       if (err) {
         return res.status(500).send(err.message);
@@ -55,7 +64,7 @@ app.post('/signup', (req, res) => {
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
   db.get(
-    `SELECT * FROM employees WHERE username = ? AND password = ?`,
+    `SELECT * FROM users WHERE username = ? AND password = ?`,
     [username, password],
     (err, row) => {
       if (err) {
@@ -70,23 +79,76 @@ app.post('/login', (req, res) => {
   );
 });
 
-// Retrieve all employees endpoint
+// Add new employee endpoint
+// app.post('/employees', (req, res) => {
+//   const { name, email, phone, age } = req.body;
+//   db.run(
+//     `INSERT INTO employees (name, email, phone, age) VALUES (?, ?, ?, ?)`,
+//     [name, email, phone, age],
+//     function (err) {
+//       if (err) {
+//         return res.status(500).send(err.message);
+//       }
+//       res.status(201).send({ id: this.lastID });
+//     }
+//   );
+// });
+
+// Routes
 app.get('/employees', (req, res) => {
-  db.all(`SELECT * FROM employees`, [], (err, rows) => {
+  db.all('SELECT * FROM employees', [], (err, rows) => {
     if (err) {
-      return res.status(500).send(err.message);
+      console.error('Error fetching employees:', err.message);
+      return res.status(500).send({ message: 'Internal Server Error' });
     }
     res.status(200).send(rows);
   });
 });
 
-// Update employee by ID endpoint
+app.post('/employees', (req, res) => {
+  const { username, email, phone, age } = req.body;
+  console.log('Request body:', req.body); // Log the request body
+
+  // Validate input
+  if (!username || !email || !phone || !age) {
+    console.log('Validation error: All fields are required');
+    return res.status(400).send({ message: 'All fields are required' });
+  }
+
+  // Run database insertion
+  db.run(
+    'INSERT INTO employees (username, email, phone, age) VALUES (?, ?, ?, ?)',
+    [username, email, phone, age],
+    function (err) {
+      if (err) {
+        console.error('Error inserting employee:', err.message);
+        return res.status(500).send({ message: `Internal Server Error: ${err.message}` });
+      }
+      res.status(201).send({ id: this.lastID });
+    }
+  );
+});
+
+app.delete('/employees/:id', (req, res) => {
+  const { id } = req.params;
+
+  db.run('DELETE FROM employees WHERE id = ?', id, function (err) {
+    if (err) {
+      console.error('Error deleting employee:', err.message);
+      return res.status(500).send({ message: `Internal Server Error: ${err.message}` });
+    }
+    res.status(200).send({ message: 'Employee deleted successfully' });
+  });
+});
+
+
+// // Update employee by ID endpoint
 app.put('/employees/:id', (req, res) => {
   const { id } = req.params;
-  const { username, email, phone, age, password } = req.body;
+  const { username, email, phone, age } = req.body;
   db.run(
-    `UPDATE employees SET username = ?, email = ?, phone = ?, age = ?, password = ? WHERE id = ?`,
-    [username, email, phone, age, password, id],
+    `UPDATE employees SET username = ?, email = ?, phone = ?, age = ? WHERE id = ?`,
+    [username, email, phone, age, id],
     function (err) {
       if (err) {
         return res.status(500).send(err.message);
@@ -96,16 +158,6 @@ app.put('/employees/:id', (req, res) => {
   );
 });
 
-// Delete employee by ID endpoint
-app.delete('/employees/:id', (req, res) => {
-  const { id } = req.params;
-  db.run(`DELETE FROM employees WHERE id = ?`, id, function (err) {
-    if (err) {
-      return res.status(500).send(err.message);
-    }
-    res.status(200).send({ message: 'Employee deleted' });
-  });
-});
 
 // Start the server
 app.listen(PORT, () => {

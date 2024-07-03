@@ -163,79 +163,92 @@ button{
   }
   
   .employee-list-container {
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 1000px;
-    margin: 2rem auto;
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 800px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
   h1 {
     text-align: center;
-    color: #333;
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .add-employee-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .add-employee-form h2 {
+    margin-bottom: 10px;
+  }
+  
+  .add-employee-form input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .add-employee-form button {
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .add-employee-form button:hover {
+    background: #218838;
   }
   
   .employee-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 1.5rem;
-  }
-  
-  .employee-table thead {
-    background-color: #6a11cb;
-    color: white;
+    margin-top: 20px;
   }
   
   .employee-table th, .employee-table td {
-    padding: 1rem;
+    padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
   }
   
   .employee-table th {
-    font-weight: bold;
-  }
-  
-  .employee-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-  
-  .employee-table tr:hover {
-    background-color: #ddd;
-  }
-  
-  .employee-actions {
-    display: flex;
-    gap: 0.5rem;
-  }
-  
-  .edit-button,
-  .delete-button {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    color: white;
+    background: #f1f1f1;
   }
   
   .edit-button {
-    background-color: #4caf50;
-  }
-  
-  .delete-button {
-    background-color: #f44336;
+    background: #007bff;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-right: 5px;
   }
   
   .edit-button:hover {
-    background-color: #45a049;
+    background: #0056b3;
+  }
+  
+  .delete-button {
+    background: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
   }
   
   .delete-button:hover {
-    background-color: #e53935;
+    background: #c82333;
   }
+  
   .edit-employee-container {
     display: flex;
     justify-content: center;

@@ -8,7 +8,6 @@ import EditEmployee from './components/EditEmployee';
 
 const App = () => {
   return (
-    <>
     <Router>
       <div className="App">
         <Switch>
@@ -20,7 +19,6 @@ const App = () => {
         </Switch>
       </div>
     </Router>
-    </>
   );
 };
 

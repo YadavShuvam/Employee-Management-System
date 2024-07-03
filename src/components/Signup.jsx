@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const Signup = () => {
-  const [form, setForm] = useState({ username: '', email: '', phone: '', age: '', password: '' });
+  const [form, setForm] = useState({ username: '', email: '', password: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,8 +27,6 @@ const Signup = () => {
         <h2>Signup</h2>
         <input name="username" placeholder="Username" value={form.username} onChange={handleChange} />
         <input name="email" placeholder="Email" value={form.email} onChange={handleChange} />
-        <input name="phone" placeholder="Phone" value={form.phone} onChange={handleChange} />
-        <input name="age" placeholder="Age" value={form.age} onChange={handleChange} />
         <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} />
         <button type="submit">Signup</button>
       </form>

@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
 
-
 const EditEmployee = () => {
-  const [form, setForm] = useState({ username: '', email: '', phone: '', age: '', password: '' });
+  const [form, setForm] = useState({ username: '', email: '', phone: '', age: '' });
   const { id } = useParams();
   const history = useHistory();
 
@@ -41,11 +40,10 @@ const EditEmployee = () => {
     <div className="edit-employee-container">
       <form className="edit-employee-form" onSubmit={handleSubmit}>
         <h2>Edit Employee</h2>
-        <input name="username" placeholder="Username" value={form.username} onChange={handleChange} />
+        <input name="name" placeholder="Name" value={form.username} onChange={handleChange} />
         <input name="email" placeholder="Email" value={form.email} onChange={handleChange} />
         <input name="phone" placeholder="Phone" value={form.phone} onChange={handleChange} />
         <input name="age" placeholder="Age" value={form.age} onChange={handleChange} />
-        <input name="password" type="password" placeholder="Password" value={form.password} onChange={handleChange} />
         <button type="submit">Update</button>
       </form>
     </div>
